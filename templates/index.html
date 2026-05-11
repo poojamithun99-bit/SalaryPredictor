@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Predictor (AI) | Professional Global Analytics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="mobile-header">
+        <div class="logo-icon">AI</div>
+        <h1>PREDICT</h1>
+    </header>
+    <div class="app-layout">
+        <nav class="sidebar">
+            <div class="brand">
+                <div class="logo-icon">AI</div>
+                <h1>PREDICT</h1>
+            </div>
+            <div class="nav-links">
+                <div class="nav-item active" id="nav-dashboard">Dashboard</div>
+                <div class="nav-item" id="nav-insights">Market Insights</div>
+            </div>
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider round">
+                        <span class="icon sun">☀️</span>
+                        <span class="icon moon">🌙</span>
+                    </div>
+                </label>
+                <span class="theme-label">Dark Mode</span>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <h2 class="page-title" id="view-title">Salary Predictor (AI)</h2>
+                <div class="user-profile">
+                    <span class="status-badge">System Active</span>
+                </div>
+            </header>
+
+            <!-- Dashboard View -->
+            <div id="dashboard-view" class="view-content">
+                <div class="dashboard-grid">
+                    <!-- Input Section -->
+                    <section class="card input-section">
+                        <h3 class="card-title">Analysis Parameters</h3>
+                        <div class="form-container">
+                            <div class="input-group">
+                                <label>Location</label>
+                                <select id="country">
+                                    <option value="USA">United States</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="France">France</option>
+                                    <option value="India">India</option>
+                                    <option value="South Korea">South Korea</option>
+                                    <option value="Japan">Japan</option>
+                                    <option value="Germany">Germany</option>
+                                    <option value="Australia">Australia</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Job Role</label>
+                                <select id="job_role"></select>
+                            </div>
+                            <div class="input-group">
+                                <label>Skill Level</label>
+                                <select id="skill_level">
+                                    <option value="Junior">Junior (Entry)</option>
+                                    <option value="Mid-level" selected>Mid-level</option>
+                                    <option value="Senior">Senior (Lead)</option>
+                                    <option value="Expert">Expert / Specialist</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Company Type</label>
+                                <select id="company_type">
+                                    <option value="Startup">Early/Late Startup</option>
+                                    <option value="MNC">MNC (Multi-National)</option>
+                                    <option value="Product-based" selected>Product-based (FAANG/Tier 1)</option>
+                                    <option value="Service-based">Service-based (TCS/Infosys)</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Years of Experience: <span id="exp-val">5</span></label>
+                                <input type="range" id="experience" min="0" max="25" value="5">
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Prediction Section -->
+                    <section class="card prediction-card">
+                        <div class="prediction-header">
+                            <h3 class="card-title">Predicted Annual Income</h3>
+                            <span class="confidence-pill">AI Confidence: <span id="confidence">98%</span></span>
+                        </div>
+                        <div class="salary-main">
+                            <span class="currency-symbol">$</span>
+                            <span id="predicted-salary">0</span>
+                        </div>
+
+                        <!-- YoY Trend Area Chart -->
+                        <div class="trend-container">
+                            <h4 class="small-title">5-Year Salary Trend (YoY)</h4>
+                            <div id="candle-chart" class="trend-chart"></div>
+                        </div>
+
+                        <div class="breakdown-grid">
+                            <div class="breakdown-item">
+                                <span class="label">Monthly</span>
+                                <span class="value" id="monthly-salary">0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="label">Weekly</span>
+                                <span class="value" id="weekly-salary">0</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Growth Chart Section -->
+                    <section class="card chart-section">
+                        <h3 class="card-title">Detailed Market Projection</h3>
+                        <div id="chart-container" class="chart-container"></div>
+                        <div class="growth-stats" id="growth-stats"></div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Market Insights View -->
+            <div id="insights-view" class="view-content" style="display: none;">
+                <div class="insights-grid">
+                    <section class="card stats-card">
+                        <h3 class="card-title">Global Top Paying Regions</h3>
+                        <div id="top-countries-list" class="insights-list"></div>
+                    </section>
+                    <section class="card stats-card">
+                        <h3 class="card-title">High-Demand Roles</h3>
+                        <div id="top-roles-list" class="insights-list"></div>
+                    </section>
+                    <section class="card stats-card full-width">
+                        <h3 class="card-title">Global Salary Benchmarks (Avg USD)</h3>
+                        <div class="table-responsive">
+                            <table class="insights-table">
+                                <thead>
+                                    <tr>
+                                        <th>Country</th>
+                                        <th>Avg Salary</th>
+                                        <th>Growth</th>
+                                        <th>Demand</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="benchmarks-table"></tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div id="chart-tooltip" class="chart-tooltip"></div>
+    <script src="{{ url_for('static', filename='js/app_core.js') }}"></script>
+</body>
+</html>
